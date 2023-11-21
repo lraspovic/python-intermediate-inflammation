@@ -73,3 +73,70 @@ def daily_stdev(data):
     """
 
     return np.std(data, axis=1)
+
+def daily_above_treshold(patient_num, data, treshold):
+    """Determine whether or not each daily inflammation value exceeds a given treshold for a given patient.
+
+    :param patient_num: The patient row number
+    :param data: A 2D data array with inflammation data
+    :param treshold: An inflammation treshold to check each daily value against
+    :returns: A boolean list representing whether or not each patient's daily inflammation exceeded the treshold
+    """ 
+
+    bool_array = list(map(lambda x: x > treshold, data[patient_num]))
+    from functools import reduce
+
+    return reduce(lambda a, b: a + b, [1 for day in bool_array if day])
+
+class Observation:
+    def __init__(self, day, value):
+        self.day = day
+        self.value = value
+    
+    def __str__(self) -> str:
+        return str(self.value)
+
+class Person:
+    def __init__(self, name) -> None:
+        self.name = name
+
+    def __str__(self) -> str:
+        return self.name
+
+class Patient(Person):
+    """A patient in an inflammation study."""
+    def __init__(self, name, observations=None) -> None:
+        super().__init__(name)
+        self.observations = []
+
+        if observations is not None:
+            self.observations = observations
+
+    def add_observation(self, value, day=None):
+        if day is None:
+            try: 
+                day = self.observations[-1].day + 1
+
+            except IndexError:
+                day = 0
+        
+        new_observation = Observation(day, value)
+
+        self.observations.append(new_observation)
+        return new_observation
+    
+    def __str__(self) -> str:
+        return self.name
+    
+    @property
+    def last_observation(self):
+        return self.observations[-1]
+
+class Doctor(Person):
+    def __init__(self, name) -> None:
+        super().__init__(name)
+        self.patients = []
+    
+    def add_patient(self, patient):
+        if not patient in self.patients:
+            self.patients.append(patient)
