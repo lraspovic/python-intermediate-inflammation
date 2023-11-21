@@ -19,7 +19,6 @@ def main(args):
 
     for filename in infiles:
         inflammation_data = models.load_csv(filename)
-
         if args.view == 'visualize':
 
             view_data = {
@@ -37,6 +36,14 @@ def main(args):
             patient = models.Patient('UNKNOWN', observations)
 
             views.display_patient_record(patient)
+
+        elif args.save > 0:
+            print('in here')
+            patient_data = inflammation_data[args.save]
+            observations = [models.Observation(day, value) for day, value in enumerate(patient_data)]
+            patient = models.Patient('UNKNOWN', observations)
+
+            views.save_patient_record(patient)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -60,6 +67,13 @@ if __name__ == "__main__":
         type=int,
         default=0,
         help='Which patient should be displayed?'
+    )
+
+    parser.add_argument(
+        '--save',
+        type=int,
+        default=0,
+        help='Save to json.'
     )
 
     args = parser.parse_args()

@@ -95,6 +95,9 @@ class Observation:
     
     def __str__(self) -> str:
         return str(self.value)
+    
+    def __eq__(self, other: object) -> bool:
+        return self.day == other.day and self.value == other.value
 
 class Person:
     def __init__(self, name) -> None:
@@ -131,6 +134,13 @@ class Patient(Person):
     @property
     def last_observation(self):
         return self.observations[-1]
+    
+    def __eq__(self, other: object) -> bool:
+        if self.name == other.name:
+            for obs, obs_other in zip(self.observations, other.observations):
+                if obs != obs_other:
+                    return False
+        return True
 
 class Doctor(Person):
     def __init__(self, name) -> None:
