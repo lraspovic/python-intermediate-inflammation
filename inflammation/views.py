@@ -11,7 +11,6 @@ def visualize(data_dict):
     :param data_dict: Dictionary of name -> data to plot
     """
     # TODO(lesson-design) Extend to allow saving figure to file
-
     num_plots = len(data_dict)
     fig = plt.figure(figsize=((3 * num_plots) + 1, 3.0))
 
@@ -31,8 +30,7 @@ def display_patient_record(patient):
     for obs in patient.observations:
         print(obs.day, obs.value)
 
-def save_patient_record(patient):
+def save_patient_record(patient, save_path):
     if not isinstance(patient, list):
         patient = [patient]
-    print(patient)
-    PatientJSONSerializer.save(patient, 'patient.json')
+    PatientJSONSerializer.save(patient, save_path)

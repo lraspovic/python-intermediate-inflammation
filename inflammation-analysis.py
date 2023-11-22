@@ -37,13 +37,9 @@ def main(args):
 
             views.display_patient_record(patient)
 
-        elif args.save > 0:
-            print('in here')
-            patient_data = inflammation_data[args.save]
-            observations = [models.Observation(day, value) for day, value in enumerate(patient_data)]
-            patient = models.Patient('UNKNOWN', observations)
-
-            views.save_patient_record(patient)
+            if args.save:
+                print('in here')
+                views.save_patient_record(patient, args.save)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -71,8 +67,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '--save',
-        type=int,
-        default=0,
+        type=str,
         help='Save to json.'
     )
 
