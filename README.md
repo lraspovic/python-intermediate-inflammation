@@ -1,4 +1,5 @@
 # Inflam
+![Continuous Integration build in GitHub Actions](https://github.com/lraspovic/python-intermediate-inflammation/workflows/CI/badge.svg?branch=main)
 Inflam is a data management system written in Python that manages trial data used in clinical inflammation studies.
 
 ## Main features
@@ -20,4 +21,3 @@ The following optional packages are required to run Inflam's unit tests:
 - [pytest](https://docs.pytest.org/en/stable/) - Inflam's unit tests are written using pytest
 - [pytest-cov](https://pypi.org/project/pytest-cov/) - Adds test coverage stats to unit testing
 
-![Continuous Integration build in GitHub Actions](https://github.com/lraspovic/python-intermediate-inflammation/workflows/CI/badge.svg?branch=main)
